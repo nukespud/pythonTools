@@ -1,0 +1,102 @@
+=<sequence> <tparms>
+<jobinfo>
+<xslib>
+' Brian J. Ade - Basic Template
+' Initial Generation on 6.19.2012
+
+<aliasblock>
+<compblock>
+<celldatablock>
+<depletionblock>
+<burndatablock>
+<branchblock>
+
+
+'------------DEFINE NEWT MODEL--------------------
+
+read model
+<jobinfo>
+<newtparmblock>
+<newtmats>
+
+read geom
+
+<fuelpins>
+<otherpins>
+
+<cbunits>
+' channel corner
+ unit   998
+  cylinder 10   <ricorner>   chord +x=0.0    chord +y=0.0
+  cylinder 12   <rocorner>   chord +x=0.0    chord +y=0.0
+  cuboid   14   <boxcorner> 0.0  <boxcorner> 0.0
+  media <mod>  1 10
+  media <can>  1 12 -10
+  media <mod1> 1 14 -12
+  boundary    14
+' channel cutout
+unit   999
+  cuboid  10   <hwcutout> -<hwcutout>  0.0  -<tcutout>
+  media <mod1> 1 10
+  boundary    10
+' Global unit
+global unit 1000
+  cuboid 1    <hwichan> <pos>  -<hwichan> <pos>  <hwichan> <mos>  -<hwichan> <mos>
+  cuboid 2    <hwochan> <pos>  -<hwochan> <pos>  <hwochan> <mos>  -<hwochan> <mos>
+  cuboid  100  <hwassem>  -<hwassem>  <hwassem>  -<hwassem>
+
+  cylinder  6 <ricorner>   chord +x= <cornorig> <pos> chord +y= <cornorig> <mos>  origin x=  <cornorig> <pos>  y=  <cornorig> <mos>
+  cylinder  7 <rocorner>   chord +x= <cornorig> <pos> chord +y= <cornorig> <mos>  origin x=  <cornorig> <pos>  y=  <cornorig> <mos>
+  cuboid    8 <cornboxedge> <pos> <cornorig> <pos>  <cornboxedge> <mos> <cornorig> <pos>
+  cylinder  9 <ricorner>   chord -x= -<cornorig> <pos> chord +y= <cornorig> <mos>  origin x= -<cornorig> <pos>  y=  <cornorig> <mos>
+  cylinder 10 <rocorner>   chord -x= -<cornorig> <pos> chord +y= <cornorig> <mos>  origin x= -<cornorig> <pos>  y=  <cornorig> <mos>
+  cuboid   11 -<cornorig> <pos> -<cornboxedge> <pos> <cornboxedge> <mos> <cornorig> <pos>
+  cylinder 12 <ricorner>   chord -x= -<cornorig> <pos> chord -y= -<cornorig> <mos>  origin x= -<cornorig> <pos>  y= -<cornorig> <mos>
+  cylinder 13 <rocorner>   chord -x= -<cornorig> <pos> chord -y= -<cornorig> <mos>  origin x= -<cornorig> <pos>  y= -<cornorig> <mos>
+  cuboid   14 -<cornorig> <pos> -<cornboxedge> <pos> -<cornorig> <mos> -<cornboxedge> <mos>
+  cylinder 15 <ricorner>   chord +x=  <cornorig> <pos> chord -y= -<cornorig> <mos>  origin x=  <cornorig> <pos>  y= -<cornorig> <mos>
+  cylinder 16 <rocorner>   chord +x=  <cornorig> <pos> chord -y= -<cornorig> <mos>  origin x=  <cornorig> <pos>  y= -<cornorig> <mos>
+  cuboid   17 <cornboxedge> <pos> <cornorig> <pos>  -<cornorig> <mos> -<cornboxedge> <mos>
+
+  hole 998 origin x=  <cornorig> <pos>  y=  <cornorig> <mos>
+  hole 998 origin x= -<cornorig> <pos>  y=  <cornorig> <mos>  rotate a1= 90
+  hole 998 origin x= -<cornorig> <pos>  y= -<cornorig> <mos>  rotate a1=180
+  hole 998 origin x=  <cornorig> <pos>  y= -<cornorig> <mos>  rotate a1=270
+
+  hole 999 origin x=  0.0 <pos>           y=  <cutoutorig> <mos>
+  hole 999 origin x= -<cutoutorig> <pos>  y= 0.0 <mos>            rotate a1= 90
+  hole 999 origin x=  0.0 <pos>           y= -<cutoutorig> <mos>  rotate a1= 180
+  hole 999 origin x=  <cutoutorig> <pos>  y= 0.0 <mos>            rotate a1= 270
+<fuelpinholes>
+<otherpinholes>
+<cbholes>
+
+  media <mod>  1  6  8
+  media <can>  1 -6  7  8
+  media <mod1> 1 -7  8
+  media <mod>  1   9  11
+  media <can>  1  -9  10  11
+  media <mod1> 1 -10  11
+  media <mod>  1  12  14
+  media <can>  1 -12  13  14
+  media <mod1> 1 -13  14
+  media <mod>  1  15  17
+  media <can>  1 -15  16  17
+  media <mod1> 1 -16  17
+
+  media   <mod> 1 1
+  media   <can> 1 2 -1
+  media   <mod1> 1 100 -2 -8 -11 -14 -17
+  boundary 100  <globalgrid>
+end geom
+
+read bounds
+  all=refl
+end bounds
+
+<collapseblock>
+<homogblock>
+<adfblock>
+
+end model
+end

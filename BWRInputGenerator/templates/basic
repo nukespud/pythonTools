@@ -1,0 +1,82 @@
+=<sequence> <tparms>
+<jobinfo>
+<xslib>
+' Joshua Peterson and Brian - Basic Template
+' Initial Generation on 6.19.2012
+' Updated 7.25.2012, added control blades, keno capability, etc.
+
+<aliasblock>
+<compblock>
+<celldatablock>
+<depletionblock>
+<burndatablock>
+<branchblock>
+
+
+<modelstart>
+<transparmblock>
+<newtmats>
+
+read geom
+
+<fuelpins>
+<otherpins>
+
+<cbunits>
+unit   999
+  cuboid  10   <hwcutout> -<hwcutout>  0.0  -<tcutout>  <zdims>
+  media <mod1> 1 10
+  boundary    10
+' Global unit
+global unit 1000
+  cuboid 1    <hwichan> <pos>  -<hwichan> <pos>  <hwichan> <mos>  -<hwichan> <mos>  <zdims>
+  cuboid 2    <hwochan> <pos>  -<hwochan> <pos>  <hwochan> <mos>  -<hwochan> <mos>  <zdims>
+  cuboid  100  <hwassem>  -<hwassem>  <hwassem>  -<hwassem>  <zdims>
+
+<cornsurfs>
+<fuelpinholes>
+
+  hole 999 origin x=  0.0 <pos>           y=  <cutoutorig> <mos>
+  hole 999 origin x= -<cutoutorig> <pos>  y= 0.0 <mos>            rotate a1= 90
+  hole 999 origin x=  0.0 <pos>           y= -<cutoutorig> <mos>  rotate a1= 180
+  hole 999 origin x=  <cutoutorig> <pos>  y= 0.0 <mos>            rotate a1= 270
+<otherpinholes>
+<cbholes>
+
+  media <mod>  1  6  8
+  media <can>  1 -6  7  8
+  media <mod1> 1 -7  8
+  media <mod>  1   9  11
+  media <can>  1  -9  10  11
+  media <mod1> 1 -10  11
+  media <mod>  1  12  14
+  media <can>  1 -12  13  14
+  media <mod1> 1 -13  14
+  media <mod>  1  15  17
+  media <can>  1 -15  16  17
+  media <mod1> 1 -16  17
+
+  media   <mod> 1 1       -8 -11 -14 -17
+  media   <can> 1 2 -1    -8 -11 -14 -17
+  media   <mod1> 1 100 -2 -8 -11 -14 -17
+  boundary 100  <globalgrid>
+end geom
+
+read bounds
+  all=refl
+end bounds
+
+<collapseblock>
+<homogblock>
+<adfblock>
+<dancoffs>
+<keno2dplot>
+<modelend>
+end  
+
+
+=shell
+mv ft33f001.cmbined $RTNDIR
+mv ft33f001* $RTNDIR
+mv ft71f001 $RTNDIR
+end

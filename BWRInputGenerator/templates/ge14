@@ -1,0 +1,76 @@
+<shellcmdsb>
+=<sequence> <tparms>
+<jobinfo>
+<xslib>
+' CONTAINS GE-HITACHI PROPRIETARY INFORMATION
+' This template built by Brian Ade, June 2012
+' BWR GE14 10x10 Bundle for MELLA+
+
+<aliasblock>
+<compblock>
+<celldatablock>
+<depletionblock>
+<burndatablock>
+<branchblock>
+
+read model
+<jobinfo>
+<newtparmblock>
+<newtmats>
+
+read geom
+
+<fuelpins>
+
+unit 200
+com='water rod'
+ cylinder 10 1.1684
+ cylinder 20 1.2446
+ media  <mod1> 1 10
+ media  <can> 1 20 -10
+ boundary 20
+
+unit 201
+com='channel corner'
+ cylinder 40 0.87376  chord -x=0 chord +y=0
+ cylinder 50 1.17865  chord -x=0 chord +y=0
+ cuboid   60  0 -1.2954  1.2954 0
+ media  <mod>  1 40
+ media  <can>  1 50 -40
+ media  <mod1>  1 60 -50
+ boundary 60
+
+<cbunits>
+
+global unit 1000
+com='assembly'
+  cuboid 51 6.70306 <pos> -6.70306 <pos> 6.70306 <mos> -6.70306 <mos>
+  cuboid 52 6.89356 <pos> -6.89356 <pos> 6.89356 <mos> -6.89356 <mos>
+  cuboid 53 7.62 -7.62  7.62 -7.62
+  hole 200 origin x=  1.2954 <pos>  y=  1.2954 <mos>
+  hole 200 origin x= -1.2954 <pos>  y= -1.2954 <mos>
+  hole 201 origin x= -5.8293 <pos>  y=  5.8293 <mos>
+  hole 201 origin x=  5.8293 <pos>  y=  5.8293 <mos>  rotate a1= 270
+  hole 201 origin x=  5.8293 <pos>  y= -5.8293 <mos>  rotate a1= 180
+  hole 201 origin x= -5.8293 <pos>  y= -5.8293 <mos>  rotate a1=  90
+<fuelpinholes>
+<cbholes>
+  media <mod>   1 51
+  media <can>   1 52 -51
+  media <mod1>  1 53 -52
+  boundary 53 <globalgrid>
+end geom
+
+read bounds
+ all=refl
+end bounds
+
+<collapseblock>
+<homogblock>
+<adfblock>
+
+end model
+
+end
+
+<shellcmdse>
