@@ -18,12 +18,12 @@ __author__ = 'f4p'
 
 
 
-WORKING_DIR="/Users/f4p/Desktop/HFIR_mesh/"
-REF_FILE="reference.meshtal"
-PERT_FILE="pertrubed.meshtal"
-DIFF_FILE="diffResult.meshtal"
-PERCENT_DIFF_FILE="percentDiff.meshtal"
-MULTIPLICATION_NUMBER=6.4234E+18;
+WORKING_DIR="/Users/f4p/Desktop/"
+REF_FILE="BOC-Ref-24.meshtal"
+PERT_FILE="BOC-Pert-24.meshtal"
+DIFF_FILE="diffBOC-24.meshtal"
+PERCENT_DIFF_FILE="percentDiffBOC-24.meshtal"
+MULTIPLICATION_NUMBER=1;
 
 NUM_LINE=15
 resultArrayRef=[]
@@ -65,10 +65,10 @@ for line in inputRefFile:
         refResults=float(resultArrayRef[count-NUM_LINE-1])
         perResults=float(resultArrayPert[count-NUM_LINE-1])
         # print refResults,perResults
-        # if (refResults!=0):
-        #     percentDiff=(refResults-perResults)/refResults
-        # else:
-        #     percentDiff=0
+        if (refResults!=0):
+            percentDiff=(refResults-perResults)/refResults
+        else:
+            percentDiff=0
 
         #  Used to SCALE MCNP results to per source partcile
         diff=(refResults-perResults)*MULTIPLICATION_NUMBER
@@ -80,12 +80,12 @@ for line in inputRefFile:
         else:
              line=line.replace(refResultsString, "%.5E"%(diff))
 
-        #  Percent diff captures to much noise
-        # if percentDiff<0:
-        #     line2=line2.replace(refResultsString, "%.4E"%(percentDiff))
-        #     # line2=line2.replace(refResultsString, "%.4E"%(0))
-        # else:
-        #     line2=line2.replace(refResultsString, "%.5E"%(percentDiff))
+         # Percent diff captures to much noise
+        if percentDiff<0:
+            line2=line2.replace(refResultsString, "%.4E"%(percentDiff))
+            # line2=line2.replace(refResultsString, "%.4E"%(0))
+        else:
+            line2=line2.replace(refResultsString, "%.5E"%(percentDiff))
     outputDiffFile.write(line)
     outputPercentDiff.write(line2)
 
